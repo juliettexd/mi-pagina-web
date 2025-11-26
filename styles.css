@@ -35,6 +35,54 @@ nav a {
 nav a:hover {
     color: #f0f0f0;
 }
+/* --- Contenedor de Búsqueda General (NUEVO) --- */
+#contenedor-busqueda {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center; /* Centra la barra */
+    gap: 5px; /* Espacio entre el input y el botón */
+    max-width: 600px; 
+    margin: 10px auto 0; /* Centrado y espacio debajo de la navegación */
+}
+
+/* Campo de Entrada (Input) (NUEVO) */
+#input-busqueda {
+    padding: 10px 15px;
+    width: 100%;
+    border: 2px solid #333; 
+    border-radius: 20px; /* Bordes redondeados */
+    background-color: #222; 
+    color: white;
+    font-size: 16px;
+    outline: none; 
+    transition: border-color 0.3s;
+}
+
+#input-busqueda::placeholder {
+    color: #999;
+}
+
+#input-busqueda:focus {
+    border-color: #ffbc00; /* Borde de acento al enfocar */
+}
+
+/* Botón de Búsqueda (NUEVO) */
+#boton-busqueda {
+    padding: 10px 15px;
+    background-color: #ffbc00;
+    color: #121212; 
+    border: none;
+    border-radius: 20px; 
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#boton-busqueda:hover {
+    background-color: #f9a800; 
+}
+
 
 /* Banner de contenido */
 #banner {
@@ -191,3 +239,4 @@ button:hover {
     border: none;
     width: 100%;
 }
+
