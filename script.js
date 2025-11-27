@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 1.2 Obtener todas las secciones principales por su ID
-    // NOTA: Se ha quitado la referencia a '#series' ya que la eliminamos del HTML
     const secciones = {
         '#inicio': document.getElementById('inicio'),
         '#peliculas': document.getElementById('peliculas'),
@@ -100,5 +99,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnInfo = document.querySelector('.btn-info');
     
     if (btnPlayBanner) {
+        // CORRECCIÓN DE SINTAXIS: Se completa la función del botón Play
         btnPlayBanner.addEventListener('click', () => {
-            window.
+            window.open('peliculas/moana.mp4', '_blank'); 
+        });
+    }
+    
+    if (btnInfo) {
+        btnInfo.addEventListener('click', () => {
+            alert('Agregado a tu lista.');
+        });
+    }
+
+    // === 1.5 Lógica de Reproducción de Tarjetas ===
+    document.querySelectorAll('.movie-card').forEach(card => {
+        const videoURL = card.getAttribute('data-video-url');
+        const playButtons = card.querySelectorAll('[data-action="play"]'); 
+        
+        playButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                
+                if (videoURL) {
+                    window.open(videoURL, '_blank'); 
+                } else {
+                    alert('Error: La URL del video no está definida para esta película.');
+                }
+            });
+        });
+        
+        // Manejo del botón 'Mi lista'
+        const addToListButton = card.querySelector('.btn:not([data-action="play"])');
+        if (addToListButton && addToListButton.textContent.includes('Mi lista')) {
+            addToListButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const titleElement = card.querySelector('h3, h4');
+                const title = titleElement ? titleElement.textContent : "Contenido Desconocido";
+                alert(`"${title}" agregado a tu lista.`);
+            });
+        }
+    });
+
+
+    // === 2. Lógica de Búsqueda ===
+
+    const inputBusqueda = document.getElementById('search-input'); 
+    const todasLasTarjetas = document.querySelectorAll('.movie-card');
+    const searchButton = document.getElementById('search-button');
+
+    function filtrarPeliculas() {
+        const textoBusqueda = inputBusqueda.value.toLowerCase().trim();
+
+        if (textoBusqueda.length > 0) {
+            
+            // 1. Navegar a la vista de Películas/Búsqueda 
+            cambiarVista('#peliculas'); 
+            
+            // 2. Filtrar las tarjetas
+            todasLasTarjetas.forEach(tarjeta => {
+                const tituloElemento = tarjeta.querySelector('h3, h4'); 
+                if (!tituloElemento) return; 
+
+                const tituloPelicula = tituloElemento.textContent.toLowerCase();
+
+                if (tituloPelicula.includes(textoBusqueda)) {
+                    tarjeta.style.display = 'block'; 
+                } else {
+                    tarjeta.style.display = 'none';
+                }
+            });
+
+        } else {
+            // Si el campo de búsqueda está vacío, volvemos a la vista de inicio
+            cambiarVista('#inicio');
+        }
+    }
+
+    // Asignamos el evento al input (búsqueda en tiempo real)
+    inputBusqueda.addEventListener('input', filtrarPeliculas);
+    
+    // Asignamos el evento al botón de búsqueda
+    if (searchButton) {
+        searchButton.addEventListener('click', (e) => {
+             e.preventDefault(); 
+             filtrarPeliculas();
+        });
+    }
+});
