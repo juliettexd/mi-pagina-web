@@ -1,75 +1,106 @@
 document.addEventListener('DOMContentLoaded', () => {
     // === 1. Lógica de Navegación y Vistas ===
 
-    // 1.1 Obtener los enlaces de la navegación
-    const linkInicio = document.querySelector('nav ul li a[href="#inicio"]');
-    const linkPeliculas = document.querySelector('nav ul li a[href="#peliculas"]');
-    // Puedes agregar más enlaces aquí (Series, Documentales)
+    // 1.1 Obtener todos los enlaces de navegación por su atributo href
+    const enlacesNavegacion = document.querySelectorAll('.navbar ul li a');
 
-    // 1.2 Obtener las secciones (vistas)
-    const seccionInicio = document.getElementById('inicio');
-    const seccionPeliculas = document.getElementById('peliculas');
-
-    // Función para cambiar de vista
-    function cambiarVista(vistaAMostrar) {
-        // Oculta todas las secciones
-        seccionInicio.style.display = 'none';
-        seccionPeliculas.style.display = 'none';
-        // Agrega aquí las otras secciones si existen
-
-        // Muestra la sección deseada
-        if (vistaAMostrar) {
-            vistaAMostrar.style.display = 'block';
+    // 1.2 Obtener todas las secciones principales
+    const secciones = {
+        '#inicio': document.getElementById('inicio'),
+        '#peliculas': document.getElementById('peliculas'),
+        '#series': document.getElementById('series'),
+        '#documentales': document.getElementById('documentales'),
+        // Añadir más secciones aquí si es necesario
+    };
+    
+    // Función para cambiar de vista (muestra la sección solicitada y oculta las demás)
+    function cambiarVista(idVistaAMostrar) {
+        let vistaEncontrada = false;
+        
+        // Iterar sobre todas las secciones
+        for (const id in secciones) {
+            const seccion = secciones[id];
+            
+            if (seccion) {
+                // Si el ID coincide con la vista a mostrar
+                if (id === idVistaAMostrar) {
+                    seccion.style.display = 'block';
+                    vistaEncontrada = true;
+                } else {
+                    // Oculta las demás secciones
+                    seccion.style.display = 'none';
+                }
+            }
+        }
+        
+        // Si no se encontró la vista, al menos intenta mostrar #peliculas para la búsqueda
+        if (idVistaAMostrar === '#peliculas' && !vistaEncontrada && secciones['#peliculas']) {
+             secciones['#peliculas'].style.display = 'block';
         }
     }
+
+    // Ocultar todas las secciones al inicio, excepto #inicio (el banner hero)
+    cambiarVista('#inicio');
+
+
+    // 1.3 Asignar Eventos a los Enlaces de Navegación
+    enlacesNavegacion.forEach(enlace => {
+        enlace.addEventListener('click', (e) => {
+            const idObjetivo = enlace.getAttribute('href');
+
+            if (idObjetivo && idObjetivo.startsWith('#')) {
+                e.preventDefault(); // Evita el comportamiento por defecto de la navegación
+                cambiarVista(idObjetivo);
+            }
+        });
+    });
     
-    // Asegurarse de que la sección de Inicio se vea al cargar, si existe
-    if (seccionInicio) {
-        seccionInicio.style.display = 'block';
+    // 1.4 Asignar Eventos a los botones de acción del Banner Hero (opcional)
+    const btnPlay = document.querySelector('.btn-play');
+    const btnInfo = document.querySelector('.btn-info');
+    
+    if (btnPlay) {
+        btnPlay.addEventListener('click', () => {
+            alert('Reproduciendo: MYTHOS QUESTS');
+        });
     }
-    // Asegurarse de que Películas esté oculta al inicio (aunque ya lo hace el CSS)
-    if (seccionPeliculas) {
-        seccionPeliculas.style.display = 'none';
-    }
-
-
-    // 1.3 Asignar Eventos a los Enlaces
-    if (linkInicio && seccionInicio) {
-        linkInicio.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita que la página salte al hash #inicio
-            cambiarVista(seccionInicio);
+    
+    if (btnInfo) {
+        btnInfo.addEventListener('click', () => {
+            alert('Agregado a tu lista.');
         });
     }
 
-    if (linkPeliculas && seccionPeliculas) {
-        linkPeliculas.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita que la página salte al hash #peliculas
-            cambiarVista(seccionPeliculas);
-        });
-    }
 
-    // === 2. Lógica de Búsqueda (Se mantiene) ===
+    // === 2. Lógica de Búsqueda ===
 
     const inputBusqueda = document.getElementById('search-input'); 
-    const contenedorPeliculas = document.getElementById('peliculas');
+    const contenedorPeliculas = secciones['#peliculas'];
 
     if (!inputBusqueda || !contenedorPeliculas) {
         console.error("Error: No se encontraron elementos de búsqueda.");
-        return;
+        // Continuamos, pero sin la funcionalidad de búsqueda
+        return; 
     }
 
+    // Nota: El contenedor de películas en tu HTML es .peliculas-populares,
+    // pero las tarjetas están dentro del div.movies-grid que está dentro de esa sección.
     const tarjetasPeliculas = contenedorPeliculas.querySelectorAll('.movie-card');
 
     function filtrarPeliculas() {
         const textoBusqueda = inputBusqueda.value.toLowerCase().trim();
 
-        // Si hay texto en la búsqueda, muestra la sección de películas para que se vea el resultado
+        // Muestra la sección de películas para ver el resultado de la búsqueda
         if (textoBusqueda.length > 0) {
-            cambiarVista(seccionPeliculas);
+            cambiarVista('#peliculas');
+        } else {
+            // Si el campo de búsqueda está vacío, volvemos a la vista de inicio
+             cambiarVista('#inicio');
         }
 
         tarjetasPeliculas.forEach(tarjeta => {
-            const tituloElemento = tarjeta.querySelector('.movie-info h3');
+            // Buscamos el h3 o el h4 dentro de la tarjeta
+            const tituloElemento = tarjeta.querySelector('h3, h4'); 
             if (!tituloElemento) return; 
 
             const tituloPelicula = tituloElemento.textContent.toLowerCase();
@@ -82,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Asignamos el evento al input
     inputBusqueda.addEventListener('input', filtrarPeliculas);
-
+    
+    // Prevenimos que el botón de búsqueda recargue la página (en tu HTML es un botón de submit)
+    const searchForm = document.querySelector('.search-container').closest('form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => e.preventDefault());
+    }
 });
