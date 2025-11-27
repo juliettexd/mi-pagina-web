@@ -1,0 +1,64 @@
+/* Barra de navegación */
+header {
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;  /* Espacio entre el logo y el buscador */
+    align-items: center;
+}
+
+/* Contenedor de los enlaces de la barra de navegación */
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    gap: 30px;  /* Espacio entre los enlaces */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+    font-size: 18px;  /* Tamaño de la letra */
+    font-weight: medium;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Buscador */
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background-color: #FF9900;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #FF6600;
+}
