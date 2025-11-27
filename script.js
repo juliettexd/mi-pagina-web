@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (idVistaAMostrar === '#inicio') {
             document.getElementById('inicio').style.display = 'block';
-            contentRows.forEach(row => row.style.display = 'block'); // Muestra todas las filas en Inicio
+            contentRows.forEach(row => row.style.display = 'block');
             
         } else if (idVistaAMostrar === '#series') {
             const seriesRow = findRowByTitle('Series épicas');
@@ -48,13 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } else if (idVistaAMostrar === '#peliculas') {
             
-            document.getElementById('peliculas').style.display = 'block'; // Muestra la cuadrícula de Películas
+            document.getElementById('peliculas').style.display = 'block'; 
             
-            // Para la vista Películas, puedes optar por mostrar solo la cuadrícula o añadir filas específicas:
             const tendenciasRow = findRowByTitle('Tendencias ahora');
             if (tendenciasRow) {
-                 // **IMPORTANTE:** Si no quieres ver las filas en la vista Películas, cambia 'block' por 'none'.
-                 // Dejaré 'block' para que la búsqueda pueda usar todas las tarjetas si lo necesitas.
                  tendenciasRow.style.display = 'block'; 
             }
             
@@ -65,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Caso de búsqueda
             document.getElementById('peliculas').style.display = 'block'; 
-            contentRows.forEach(row => row.style.display = 'block'); // Muestra filas para que la búsqueda funcione en ellas
+            contentRows.forEach(row => row.style.display = 'block');
         }
 
         // Restaura todas las tarjetas a 'block' para que el filtro de búsqueda no persista
@@ -105,19 +102,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === 1.5 Lógica de Reproducción de Tarjetas ===
+    // === 1.5 Lógica de Reproducción de Tarjetas (CRÍTICO) ===
     document.querySelectorAll('.movie-card').forEach(card => {
+        // Obtenemos la URL del atributo data-video-url
         const videoURL = card.getAttribute('data-video-url');
+        // Seleccionamos los botones que tienen data-action="play"
         const playButtons = card.querySelectorAll('[data-action="play"]'); 
         
+        // ASIGNAMOS EL EVENTO DE CLIC A CADA BOTÓN DE REPRODUCCIÓN
         playButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 
                 if (videoURL) {
+                    // ¡Aquí se abre el video!
                     window.open(videoURL, '_blank'); 
                 } else {
-                    alert('Error: La URL del video no está definida para esta película.');
+                    alert('Error: La URL del video no está definida para esta película. Revisa el atributo data-video-url.');
                 }
             });
         });
@@ -138,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // === 2. Lógica de Búsqueda ===
 
     const inputBusqueda = document.getElementById('search-input'); 
-    const todasLasTarjetas = document.querySelectorAll('.movie-card'); // Lista de todas las tarjetas
+    const todasLasTarjetas = document.querySelectorAll('.movie-card'); 
     const searchButton = document.getElementById('search-button');
 
     function filtrarPeliculas() {
@@ -146,13 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (textoBusqueda.length > 0) {
             
-            // 1. Prepara la vista para la búsqueda
-            // Muestra #peliculas y todas las filas, permitiendo que el filtro oculte lo que no coincide.
-            cambiarVista('BUSQUEDA'); // Usamos una cadena especial para el modo búsqueda
+            // Prepara la vista para la búsqueda
+            cambiarVista('BUSQUEDA'); 
             
-            // 2. Filtrar las tarjetas
+            // Filtrar las tarjetas
             todasLasTarjetas.forEach(tarjeta => {
-                // Obtiene el título de la tarjeta (en tu HTML es un <h4>)
                 const tituloElemento = tarjeta.querySelector('h3, h4'); 
                 if (!tituloElemento) return; 
 
@@ -166,15 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
         } else {
-            // Si el campo de búsqueda está vacío, volvemos a la vista de inicio
             cambiarVista('#inicio');
         }
     }
 
-    // Asignamos el evento al input (búsqueda en tiempo real)
     inputBusqueda.addEventListener('input', filtrarPeliculas);
     
-    // Asignamos el evento al botón de búsqueda
     if (searchButton) {
         searchButton.addEventListener('click', (e) => {
              e.preventDefault(); 
