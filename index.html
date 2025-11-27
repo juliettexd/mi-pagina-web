@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>MYTHOS STREAMING</title>
+    <link rel="stylesheet" href="styles.css"> 
     <script src="script.js" defer></script>
 </head>
 <body>
     <header>
         <div class="navbar">
+            <div class="logo">
+                <img src="imagenes/logo.png" alt="MYTHOS STREAMING" style="height: 30px;">
+            </div>
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Películas</a></li>
-                <li><a href="#">Series</a></li>
-                <li><a href="#">Documentales</a></li>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#peliculas">Películas</a></li>
+                <li><a href="#series">Series</a></li>
+                <li><a href="#documentales">Documentales</a></li>
             </ul>
             <div class="search-container">
                 <input type="text" placeholder="Buscar..." id="search-input">
@@ -25,61 +27,112 @@
     </header>
 
     <main>
-        <section class="video-container">
-            <h1>MYTHOS QUESTS: NEW HEROES RISE</h1>
-            <video controls>
-                <source src="peliculas/moana.mp4" type="video/mp4">
-                Tu navegador no soporta el formato de video.
-            </video>
-        </section>
-
-        <section class="peliculas-populares">
-            <h2>Películas Populares</h2>
-            <div class="movie">
-                <img src="imagenes/supermario.jpg" alt="Super Mario Bros">
-                <div class="movie-overlay">
-                    <button class="btn">Ver ahora</button>
-                    <button class="btn">Agregar a mi lista</button>
-                </div>
-                <h3>Super Mario Bros: The Movie</h3>
+        <section id="inicio" class="banner-hero">
+            <div class="video-background">
+                <video autoplay muted loop>
+                    <source src="peliculas/moana.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
             </div>
 
-            <div class="movie">
-                <img src="imagenes/moana.jpg" alt="Moana">
-                <div class="movie-overlay">
-                    <button class="btn">Ver ahora</button>
-                    <button class="btn">Agregar a mi lista</button>
+            <div class="banner-content">
+                <h1 class="title">MYTHOS QUESTS: NEW HEROES RISE</h1>
+                <p class="tagline">Gods. Heroes. Monsters. An ultimate battle for control.</p>
+                <div class="banner-actions">
+                    <button class="btn btn-play">▶ Reproducir</button>
+                    <button class="btn btn-info">ℹ️ Mi lista</button>
                 </div>
-                <h3>Moana</h3>
-            </div>
-
-            <div class="movie">
-                <img src="imagenes/frozen.jpg" alt="Frozen">
-                <div class="movie-overlay">
-                    <button class="btn">Ver ahora</button>
-                    <button class="btn">Agregar a mi lista</button>
-                </div>
-                <h3>Frozen</h3>
-            </div>
-
-            <div class="movie">
-                <img src="imagenes/intensamente.jpg" alt="Intensamente">
-                <div class="movie-overlay">
-                    <button class="btn">Ver ahora</button>
-                    <button class="btn">Agregar a mi lista</button>
-                </div>
-                <h3>Intensamente</h3>
-            </div>
-
-            <div class="movie">
-                <img src="imagenes/cenicienta.jpg" alt="Cenicienta">
-                <div class="movie-overlay">
-                    <button class="btn">Ver ahora</button>
-                    <button class="btn">Agregar a mi lista</button>
-                </div>
-                <h3>Cenicienta</h3>
             </div>
         </section>
+
+        <section class="content-row">
+            <h2>Tendencias ahora</h2>
+            <div class="row-cards-container">
+                <div class="movie-card">
+                    <img src="imagenes/supermario.jpg" alt="Super Mario Bros">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Heracles: The Labors</h4>
+                </div>
+                <div class="movie-card">
+                    <img src="imagenes/moana.jpg" alt="Moana">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Medusa's Gaze</h4>
+                </div>
+                <div class="movie-card">
+                    <img src="imagenes/frozen.jpg" alt="Frozen">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Odysseus & the Sirens</h4>
+                </div>
+                <div class="movie-card">
+                    <img src="imagenes/intensamente.jpg" alt="Intensamente">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Odyssey: A King's Return</h4>
+                </div>
+                <div class="movie-card">
+                    <img src="imagenes/cenicienta.jpg" alt="Cenicienta">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Percy Troy: The Lightning Thief</h4>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-row">
+            <h2>Series épicas</h2>
+            <div class="row-cards-container">
+                <div class="movie-card">
+                    <img src="imagenes/supermario.jpg" alt="Atlantis">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Atlantis Rising</h4>
+                </div>
+                 <div class="movie-card">
+                    <img src="imagenes/moana.jpg" alt="Minotaurs">
+                    <div class="movie-overlay">
+                        <button class="btn btn-overlay">Ver ahora</button>
+                    </div>
+                    <h4>Minotaur's Maze</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="peliculas" class="peliculas-populares">
+            <h2>Películas Taquilleras</h2>
+            <div class="movies-grid"> 
+                <div class="movie-card">
+                    <img src="imagenes/supermario.jpg" alt="Clash of Titans">
+                    <div class="movie-overlay">
+                        <button class="btn">Ver ahora</button>
+                        <button class="btn">Mi lista</button>
+                    </div>
+                    <h3>Clash of Titans</h3>
+                </div>
+
+                <div class="movie-card">
+                    <img src="imagenes/moana.jpg" alt="Immortals">
+                    <div class="movie-overlay">
+                        <button class="btn">Ver ahora</button>
+                        <button class="btn">Mi lista</button>
+                    </div>
+                    <h3>Immortals</h3>
+                </div>
+                </div>
+        </section>
+        
     </main>
+    
+    <footer>
+        <p>&copy; 2025 MYTHOS STREAMING</p>
+    </footer>
 </body>
 </html>
