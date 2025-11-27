@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="stylesheet" href="styles.css">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYTHOS STREAMING</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" id="inicio-link">Inicio</a></li>
+                <li><a href="#" id="peliculas-link">Películas</a></li>
+                <li><a href="#">Series</a></li>
+                <li><a href="#">Documentales</a></li>
+            </ul>
+            <!-- Buscador -->
+            <form action="#" method="get" class="search-form">
+                <input type="text" id="search-input" placeholder="Buscar..." class="search-input">
+                <button type="submit" class="search-button">🔍</button>
+            </form>
+        </nav>
+    </header>
+
+    <!-- Secciones -->
+    <!-- Inicio -->
+    <section id="inicio" class="section">
+        <h1>MYTHOS QUESTS: NEW HEROES RISE</h1>
+        <div id="video-player">
+            <video controls>
+                <source src="peliculas/moana.mp4" type="video/mp4">
+                Tu navegador no soporta el video.
+            </video>
+        </div>
+    </section>
+
+    <!-- Películas -->
+    <section id="peliculas" class="section" style="display: none;">
+        <h2>Películas Populares</h2>
+        <!-- Aquí irán las películas -->
+        <div class="movie-card" id="movie-mario">
+            <img src="imagenes/mario-bros.jpg" alt="Super Mario Bros: The Movie">
+            <div class="movie-info">
+                <h3>Super Mario Bros: The Movie</h3>
+                <a href="peliculas/mario-bros.mp4" target="_blank">Ver ahora</a>
+            </div>
+        </div>
+
+        <div class="movie-card" id="movie-moana">
+            <img src="imagenes/moana.jpg" alt="Moana">
+            <div class="movie-info">
+                <h3>Moana</h3>
+                <a href="peliculas/moana.mp4" target="_blank">Ver ahora</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Mythos Streaming</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

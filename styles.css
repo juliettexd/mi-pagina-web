@@ -1,0 +1,144 @@
+/* Estilos generales para la página */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra de navegación */
+header {
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Estilo para el buscador en la barra de navegación */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto; /* Esto mueve el buscador a la derecha */
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background-color: #FF9900;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #FF6600;
+}
+
+/* Sección de inicio y películas */
+.section {
+    padding: 20px;
+    display: none; /* Ocultar por defecto */
+}
+
+#inicio {
+    display: block; /* Mostrar la sección de inicio por defecto */
+}
+
+#peliculas {
+    display: none; /* La sección de películas está oculta inicialmente */
+}
+
+/* Películas - Tarjetas */
+.movie-card {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    margin: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.movie-card .movie-info {
+    margin-top: 10px;
+}
+
+.movie-card .movie-info a {
+    color: #FF9900;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.movie-card .movie-info a:hover {
+    color: #FF6600;
+}
+
+.movie-card:hover {
+    transform: scale(1.05); /* Efecto de escala cuando se pasa el ratón sobre la tarjeta */
+}
+
+/* Sección del pie de página */
+footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Estilos para el reproductor de video */
+#video-player {
+    margin-top: 20px;
+    text-align: center;
+}
+
+video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 5px;
+    background-color: #111;
+}
+
+/* Aseguramos que los elementos estén bien alineados */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
