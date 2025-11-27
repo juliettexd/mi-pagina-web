@@ -24,18 +24,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (seccion) {
                 // Si el ID coincide con la vista a mostrar
                 if (id === idVistaAMostrar) {
-                    seccion.style.display = 'block';
+                    // Solo mostramos si no son las filas de contenido (content-row)
+                    // Las filas deben permanecer visibles en la vista de inicio
+                    if (id === '#inicio' || id === '#peliculas' || id === '#series' || id === '#documentales') {
+                        seccion.style.display = 'block';
+                    }
                     vistaEncontrada = true;
                 } else {
                     // Oculta las demás secciones
-                    seccion.style.display = 'none';
+                    // Ocultar solo las secciones principales de navegación
+                    if (id === '#peliculas' || id === '#series' || id === '#documentales') {
+                         seccion.style.display = 'none';
+                    }
                 }
             }
         }
         
-        // Si no se encontró la vista, al menos intenta mostrar #peliculas para la búsqueda
+        // Manejo especial para la búsqueda
         if (idVistaAMostrar === '#peliculas' && !vistaEncontrada && secciones['#peliculas']) {
              secciones['#peliculas'].style.display = 'block';
+        }
+        // Asegurar que las filas de contenido estén visibles en Inicio
+        if (idVistaAMostrar === '#inicio') {
+            document.querySelectorAll('.content-row').forEach(row => row.style.display = 'block');
+        } else {
+            // Ocultar las filas de contenido si navegamos a una vista que no es 'Inicio'
+            document.querySelectorAll('.content-row').forEach(row => row.style.display = 'none');
         }
     }
 
@@ -55,13 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 1.4 Asignar Eventos a los botones de acción del Banner Hero (opcional)
-    const btnPlay = document.querySelector('.btn-play');
+    // 1.4 Asignar Eventos a los botones de acción del Banner Hero
+    const btnPlayBanner = document.querySelector('.banner-content .btn-play');
     const btnInfo = document.querySelector('.btn-info');
     
-    if (btnPlay) {
-        btnPlay.addEventListener('click', () => {
-            alert('Reproduciendo: MYTHOS QUESTS');
+    if (btnPlayBanner) {
+        btnPlayBanner.addEventListener('click', () => {
+            // El botón principal reproduce el video de fondo (Moana.mp4)
+            window.open('peliculas/moana.mp4', '_blank'); 
         });
     }
     
@@ -71,54 +86,95 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // === 1.5 Lógica de Reproducción de Tarjetas (SOLUCIÓN) ===
+    document.querySelectorAll('.movie-card').forEach(card => {
+        // Lee la URL del video del atributo data-video-url
+        const videoURL = card.getAttribute('data-video-url');
+        
+        // Selecciona todos los botones dentro de la tarjeta que tengan data-action="play"
+        const playButtons = card.querySelectorAll('[data-action="play"]'); 
+        
+        playButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evita que el clic afecte al contenedor de la tarjeta
+                
+                if (videoURL) {
+                    // Abre el video en una nueva pestaña/ventana
+                    window.open(videoURL, '_blank'); 
+                } else {
+                    alert('Error: La URL del video no está definida para esta película.');
+                }
+            });
+        });
+        
+        // Manejo del botón 'Mi lista' si existe dentro del overlay de la tarjeta
+        const addToListButton = card.querySelector('.btn:not([data-action="play"])');
+        if (addToListButton && addToListButton.textContent.includes('Mi lista')) {
+            addToListButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert(`"${card.querySelector('h3, h4').textContent}" agregado a tu lista.`);
+            });
+        }
+    });
+
 
     // === 2. Lógica de Búsqueda ===
 
     const inputBusqueda = document.getElementById('search-input'); 
-    const contenedorPeliculas = secciones['#peliculas'];
+    const contenedorPeliculas = secciones['#peliculas']; // La sección donde se mostrarán los resultados
 
     if (!inputBusqueda || !contenedorPeliculas) {
         console.error("Error: No se encontraron elementos de búsqueda.");
-        // Continuamos, pero sin la funcionalidad de búsqueda
         return; 
     }
 
-    // Nota: El contenedor de películas en tu HTML es .peliculas-populares,
-    // pero las tarjetas están dentro del div.movies-grid que está dentro de esa sección.
-    const tarjetasPeliculas = contenedorPeliculas.querySelectorAll('.movie-card');
+    // Recopila todas las tarjetas de película de todas las filas y la cuadrícula
+    const todasLasTarjetas = document.querySelectorAll('.movie-card');
 
     function filtrarPeliculas() {
         const textoBusqueda = inputBusqueda.value.toLowerCase().trim();
 
-        // Muestra la sección de películas para ver el resultado de la búsqueda
         if (textoBusqueda.length > 0) {
-            cambiarVista('#peliculas');
+            // Mostrar la sección de Películas (la cuadrícula) para la búsqueda
+            cambiarVista('#peliculas'); 
+            
+            // Ocultar las filas horizontales temporalmente si se está buscando
+            document.querySelectorAll('.content-row').forEach(row => row.style.display = 'none');
+            
+            // Asegurar que el contenedor de la cuadrícula de #peliculas esté en modo grid
+            const moviesGrid = contenedorPeliculas.querySelector('.movies-grid');
+            if (moviesGrid) moviesGrid.style.display = 'grid'; 
+
+            todasLasTarjetas.forEach(tarjeta => {
+                const tituloElemento = tarjeta.querySelector('h3, h4'); 
+                if (!tituloElemento) return; 
+
+                const tituloPelicula = tituloElemento.textContent.toLowerCase();
+
+                if (tituloPelicula.includes(textoBusqueda)) {
+                    tarjeta.style.display = 'block'; 
+                } else {
+                    tarjeta.style.display = 'none';
+                }
+            });
         } else {
             // Si el campo de búsqueda está vacío, volvemos a la vista de inicio
-             cambiarVista('#inicio');
+            cambiarVista('#inicio');
+            
+            // Restaurar la visualización normal de las tarjetas
+            todasLasTarjetas.forEach(tarjeta => tarjeta.style.display = 'block');
         }
-
-        tarjetasPeliculas.forEach(tarjeta => {
-            // Buscamos el h3 o el h4 dentro de la tarjeta
-            const tituloElemento = tarjeta.querySelector('h3, h4'); 
-            if (!tituloElemento) return; 
-
-            const tituloPelicula = tituloElemento.textContent.toLowerCase();
-
-            if (tituloPelicula.includes(textoBusqueda)) {
-                tarjeta.style.display = 'block'; 
-            } else {
-                tarjeta.style.display = 'none';
-            }
-        });
     }
 
     // Asignamos el evento al input
     inputBusqueda.addEventListener('input', filtrarPeliculas);
     
-    // Prevenimos que el botón de búsqueda recargue la página (en tu HTML es un botón de submit)
-    const searchForm = document.querySelector('.search-container').closest('form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', (e) => e.preventDefault());
+    // Prevenimos que el botón de búsqueda recargue la página
+    const searchButton = document.getElementById('search-button');
+    if (searchButton) {
+        searchButton.addEventListener('click', (e) => {
+             e.preventDefault(); // Detener el submit
+             filtrarPeliculas();
+        });
     }
 });
