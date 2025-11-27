@@ -254,4 +254,39 @@ header {
 }
 
 /* Estilo para la superposición de botones (Overlay) */
-.movie-
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* ¡CLAVE! Hace que el overlay sea invisible al inicio */
+    transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+    opacity: 1; /* ¡CLAVE! Hace que el overlay sea visible al hacer hover */
+}
+
+.movie-overlay .btn {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+/* Estilo para el botón 'Ver ahora' */
+.movie-overlay .btn[data-action="play"], .movie-overlay .btn-overlay {
+    background-color: orange;
+    color: white;
+}
+
+.movie-overlay
